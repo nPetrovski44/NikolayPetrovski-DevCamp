@@ -33,7 +33,7 @@ public class BrickWork
 				{
 					isInteger = true;
 					N = areaScanner.nextInt();
-					if((N > 0 || N <= 100) && (N % 2 == 0))
+					if((N > 0 && N <= 100) && (N % 2 == 0))
 					{
 						validInput = true;
 						coordinatesEntered++;
@@ -53,7 +53,7 @@ public class BrickWork
 				{
 					isInteger = true;
 					M = areaScanner.nextInt();
-					if((M > 0 || M <= 100) && (M % 2 == 0))
+					if((M > 0 && M <= 100) && (M % 2 == 0))
 					{
 						validInput = true;
 						coordinatesEntered++;
@@ -108,7 +108,7 @@ public class BrickWork
 						//We assign the value of the input to temporaryVar
 						temporaryVar = brickScanner.nextInt();
 						//We check if a value has been used less than 2 times and if not we need to enter a different value
-						if(timesUsed(temporaryVar, entriesArray) < 2)
+						if(timesUsed(temporaryVar, entriesArray) < 2 && temporaryVar > 0)
 						{
 							try {
 								//We check to see if a value from the input has been used only once and if so,
