@@ -71,7 +71,8 @@ public class BrickWork
 		//Input instructions
 		System.out.println("Enter " + (N*M)/2 + " numbers separated by spaces. Every number should be included twice.");
 		System.out.println("When adding the number for the second time make sure its position is either next to or below its previous position.");
-		System.out.println("For visual ease, press enter when you reach the end of each line. ");
+		System.out.println("For visual ease, press enter when you reach the end of each line.");
+		System.out.println("If you get lost and want to see your entries so far type - 'print' or type - 'exit' to terminate. ");
 		
 		
 		/*
@@ -95,6 +96,7 @@ public class BrickWork
 		int temporaryVar = 0, arrayPosition = 0, entries = 0;
 		int entriesArray[] = new int[N*M];
 		boolean incorrectlyUsed = false, integer = true;
+		grid = returnFilled(N, M);
 		for(int i = 0; i < N; i++)
 		{
 			for(int j = 0; j < M; j++)
@@ -225,13 +227,31 @@ public class BrickWork
 							incorrectlyUsed = true;
 						}
 					}
-					else
+					//Printing the grid so far
+					else 
 					{
-						integer = false;
-						System.out.println("Make sure you enter digits. Error at line "+ (i + 1)+ " and column " + (j + 1));
-						brickScanner.next();
+						String temporaryVarString = brickScanner.next();
+						if(temporaryVarString.equalsIgnoreCase("print"))
+						{
+							System.out.println("Your entries so far: ");
+							integer = false;
+							for(int k = 0; k < N; k++)
+							{
+								for(int l = 0; l < M; l++)
+								{
+									System.out.print(grid[k][l] + " ");
+								}
+								System.out.println();
+							}
+						}
+						else if(temporaryVarString.equalsIgnoreCase("exit"))System.exit(1);	
+						else 
+						{
+							integer = false;
+							System.out.println("Make sure you enter digits. Error at line "+ (i + 1)+ " and column " + (j + 1));
+						}
 					}
-			}while(incorrectlyUsed == true || integer == false);
+				}while(incorrectlyUsed == true || integer == false);
 			}
 			System.out.println();
 		}
@@ -254,7 +274,7 @@ public class BrickWork
 				}
 			}
 		}
-
+		System.out.println("This is the layer from the input: ");
 		printingGrid(grid, N, M);
 		System.out.println();
 		System.out.println();
@@ -279,6 +299,7 @@ public class BrickWork
 		copyGrid = formLayer(grid, lines, columns, countArray);
 		//If the result after calling formLayer is null, we print '-1'.
 		if(copyGrid == null)System.out.println(-1);
+		System.out.println("This is the second layer with rearranged bricks:  ");
 		printingGrid(copyGrid, lines, columns);
 	}
 	
@@ -468,6 +489,8 @@ public class BrickWork
 			
 			for(int k = 0; k < columns; k++)
 			{
+				//We use '*' for the bottom and top and middle of horizontal bricks
+				//and '-' for the middle line between vertical bricks.
 				if(i == 0)
 				{
 					System.out.print("******");
@@ -492,6 +515,7 @@ public class BrickWork
 				/*
 				 * Since our limits for lines and columns are 100 we can get a number of a brick with up to a 4-digit-number,
 				 * therefore, we have slightly different printing methods depending on the number of digits in a number.
+				 * We use '|' for the part between two bricks and ':' for the part between two parts of a single brick.
 				 */
 				switch(digitCount)
 				{
